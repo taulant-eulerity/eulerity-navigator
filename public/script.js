@@ -9,7 +9,8 @@ $(document).ready(function () {
     $(".title").lettering();
     $(".button").lettering();
   });
-  axios.get('/api/').then(response => {
+  axios.get('/api/getLeftUser').then(response => {
+    console.log(response, 'Babae')
     names = response.data   
     nameOfWeek = Math.floor(Math.random() * names.length)
 
@@ -43,7 +44,7 @@ $('.btn').click(async function() {
     this.style.display = 'none'
     innerFunction(1500)
      const winner = names[nameOfWeek]
-     await axios.post('/api/', {'userName': winner})
+     await axios.post('/api/navigator', {'userName': winner})
 })
   function animation() {
     var title1 = new TimelineMax();

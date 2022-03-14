@@ -42,10 +42,11 @@ presentations.onclick = () => {
   }
   fetch("/api/presentations").then(async (response) => {
     const data = await response.json();
+  
     const options = { year: "numeric", month: "long", day: "numeric" };
-    Object.entries(data).forEach(([date, name]) => {
-      const formatedDate = new Date(date).toLocaleDateString(undefined, options);
-      createUsersList(`${name} - ${formatedDate}`);
+    data.forEach(unit => {
+      const formatedDate = new Date(unit?.date).toLocaleDateString(undefined, options);
+      createUsersList(`${unit?.name} - ${formatedDate}`);
     });
   });
 };

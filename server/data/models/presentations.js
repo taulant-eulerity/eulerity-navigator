@@ -13,6 +13,9 @@ const Presentations = db.define("presentations", {
     unique: true,
     allowNull: false,
   },
+  date: {
+      type: Sequelize.DATE
+  }
 });
 Presentations.beforeCreate((presentations) => (presentations.id = uuidv4()));
 module.exports = Presentations;
