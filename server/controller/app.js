@@ -11,7 +11,7 @@ const navigator = async (req,res) => {
 }
 
 
-const userList = async (req,res) => {
+const userList = async (_,res) => {
     let users = await Users.findAll({attributes: ['name']})
     users = users.map(user => user.name)
     res.json(users)

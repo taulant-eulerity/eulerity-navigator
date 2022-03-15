@@ -10,7 +10,6 @@ $(document).ready(function () {
     $(".button").lettering();
   });
   axios.get('/api/getLeftUser').then(response => {
-    console.log(response, 'Babae')
     names = response.data   
     nameOfWeek = Math.floor(Math.random() * names.length)
 

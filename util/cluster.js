@@ -1,6 +1,6 @@
 const cluster = require('cluster');
 const http = require('http');
-const {app} = require('./server')
+const {app} = require('../server/api/server')
 const PORT = 8080
 if (cluster.isMaster) {
 

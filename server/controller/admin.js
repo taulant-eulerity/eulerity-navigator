@@ -1,8 +1,9 @@
 const { Users, UsersLeft, Presentations } = require("../data/models");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
+const jwt = require("jsonwebtoken")
 
-const reloadState = async (req, res) => {
+const reloadState = async (_, res) => {
   let users = await await Users.findAll();
   await UsersLeft.destroy({ where: {}, truncate: true });
   await Presentations.destroy({ where: {}, truncate: true });
@@ -11,7 +12,7 @@ const reloadState = async (req, res) => {
   res.status(200).json("reload success");
 };
 
-const getLeftUsers = async (req, res) => {
+const getLeftUsers = async (_, res) => {
   let leftusers = await UsersLeft.findAll({ attributes: ["name"] });
   leftusers = leftusers.map((user) => user.name);
   if (!leftusers.length) {
@@ -25,7 +26,7 @@ const getLeftUsers = async (req, res) => {
   res.json(leftusers);
 };
 
-const presentations = async (req, res) => {
+const presentations = async (_, res) => {
   let presentations = await Presentations.findAll();
   presentations = presentations.map((user) => ({ name: user.name, date: user.date }));
   res.json(presentations);
@@ -42,8 +43,8 @@ const createUser = async (req, res) => {
 
 const login = async (req, res) => {
   const { username, password } = req.body;
-  if (username === "test" && password === "123") {
-    const user = { name: username, password: password };
+  if (username === "tali" && password === "123") {
+    const user = { name: username};
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
     res.json({ accessToken });
     return;
@@ -51,17 +52,13 @@ const login = async (req, res) => {
   res.sendStatus(401);
 };
 
-const logout = async (req, res) => {
+const logout = async (_, res) => {
   res.clearCookie("accessToken");
   res.end();
 };
 
-const admin = (req, res) => {
-  if (req.login) {
+const admin = (_, res) => {
     res.sendFile(path.join(__dirname, "../", "/admin/index.html"));
-  } else {
-    res.sendFile(path.join(__dirname, "../", "/admin/authenticate.html"));
-  }
 };
 
 const removeUser = async (req, res) => {

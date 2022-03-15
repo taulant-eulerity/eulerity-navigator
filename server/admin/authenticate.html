@@ -14,6 +14,8 @@
     <input placeholder="password" type="password" class='password'>
     <button class="btn">log in</button>
     <script defer>
+        console.log(window.location.href)
+
         const btn = document.querySelector('.btn')
         const user = document.querySelector('.userName')
         const password = document.querySelector('.password')
@@ -28,17 +30,15 @@
                 },
                 body: JSON.stringify({ username: userName, password: pass })
             }).then(response => {
-                response.json().then(r => {
-                    document.cookie = `accessToken=${r.accessToken}`
+                response.json().then(token => {
+                    document.cookie = `accessToken=${token.accessToken}`
                     window.location.reload();
-                }).catch(() => {
+                }).catch((error) => {
                     window.alert('WRONG CREDENTIALS')
-                    user.value = ''
-                    password.value = ''
+        
                 })
 
             })
-
 
         }
 
