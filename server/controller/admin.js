@@ -57,9 +57,7 @@ const logout = async (_, res) => {
   res.end();
 };
 
-const admin = (_, res) => {
-    res.sendFile(path.join(__dirname, "../", "/admin/index.html"));
-};
+
 
 const removeUser = async (req, res) => {
   const { userName } = req.body;
@@ -74,6 +72,9 @@ const removeUser = async (req, res) => {
     return;
   }
   res.status(422).json("User doesn't exists");
+};
+const admin = (_, res) => {
+  res.sendFile(path.join(__dirname, "../", "/admin/index.html"));
 };
 
 module.exports = { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser };

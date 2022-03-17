@@ -31,7 +31,8 @@ displayUsersbtn.onclick = () => {
   }
 
   fetch("/api/userList").then(async (response) => {
-    const data = await response.json();
+    let data = await response.json();
+    data = data.sort()
     data.forEach((name) => createUsersList(name));
   });
 };
