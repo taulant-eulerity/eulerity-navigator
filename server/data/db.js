@@ -7,6 +7,5 @@ const db = new Sequelize(
       // ...and there are many other options you may want to play with
     }
   );
-  
 
 module.exports = db;
