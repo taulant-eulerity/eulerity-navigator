@@ -17,6 +17,7 @@ reloadUsersBtn.onclick = () => {
       window.alert(message);
       window.location.reload();
     }
+    console.log('')
   });
 };
 logout.onclick = function() {
