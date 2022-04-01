@@ -14,7 +14,6 @@
     <input placeholder="password" type="password" class='password'>
     <button class="btn">log in</button>
     <script defer>
-        console.log(window.location.href)
 
         const btn = document.querySelector('.btn')
         const user = document.querySelector('.userName')
@@ -23,21 +22,14 @@
         btn.onclick = function () {
             const userName = user.value
             const pass = password.value
-            fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username: userName, password: pass })
+            fetch('/api/login', { method: 'POST', headers: {"Content-Type": "application/json",}, body: JSON.stringify({ username: userName, password: pass })
             }).then(response => {
                 response.json().then(token => {
                     document.cookie = `accessToken=${token.accessToken}`
                     window.location.reload();
                 }).catch((error) => {
                     window.alert('WRONG CREDENTIALS')
-        
                 })
-
             })
 
         }

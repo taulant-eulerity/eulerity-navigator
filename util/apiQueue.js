@@ -273,7 +273,6 @@ class ApiStagger {
         const currentCall = this.data[this.length]
         const fieldValue = !this.options.isArray ? currentCall[this.options.field] : currentCall
         let url = this.options.url.replace('$PARAM', fieldValue )
-       
         if(this.options.method === 'get') {
             axios.get(url).then(response => {
                 const officialName = response.data[0]?.flag

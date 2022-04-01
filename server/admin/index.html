@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Eulerity Navigator</title>
     <script defer src="./src.js"></script>
     <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+   <div class="app-link"><a href="/app" >Go to the Navigator</a></div> 
     <div>
         <label>Add User</label>
         <input class='add-user' type='text' placeholder="enter name" />
@@ -20,15 +21,27 @@
         <button class='remove-user-btn'>remove</button>
         <button class='display-users-btn'>display the list of names*</button>
         <button class='display-presentations'>who presented so far*</button>
-        <button class='logout'>logout</button>
     </div>
-    <ol class="display-users">
-       
-    </ol>
+    <ol class="display-users"></ol>
     <div>
-        <label>Reload list of users</label>
+        <label>Reload All data*</label>
         <button class="reload-btn">reload</button>
+
     </div>
-   
+    <button class='logout'>logout</button>
+
+    <hr />
+
+        <p><b>Be kind and tell us a Joke!</b></p>
+        <form class="joke-form">
+            <textarea placeholder="Keep it short and sweet Please!!" name='joke'cols="30" rows="5"></textarea>
+            <input placeholder="Enter Name" class="form-input" name="name"></input>
+            <button class="submit-joke">Submit Joke</button>
+        </form>
+
+        <div class="read-jokes">
+            <button class="read-jokes-btn">Read all jokes*</button>
+            <div class="jokesList"></div>
+        </div>
 </body>
 </html>

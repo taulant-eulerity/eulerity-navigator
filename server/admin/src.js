@@ -7,7 +7,8 @@ const removeuserbtn = document.querySelector(".remove-user-btn");
 const adduserbtn = document.querySelector(".add-user-btn");
 const presentations = document.querySelector(".display-presentations");
 const logout = document.querySelector(".logout");
-
+const jokeForm = document.querySelector('.joke-form')
+const listAllJokesBtn = document.querySelector('.read-jokes-btn')
 //Buttons
 reloadUsersBtn.onclick = () => {
   window.alert("All data will be reloaded to the intial state! Refresh the page if you want to cancel this action!");
@@ -37,13 +38,21 @@ displayUsersbtn.onclick = () => {
   });
 };
 
+
+listAllJokesBtn.onclick = () => {
+  fetch("/api/getRandomJoke").then(async (response) => {
+    const joke = await response.json()
+    console.log(joke, 'this is a joke babe')
+  })
+}
+
+
 presentations.onclick = () => {
   if (displayUsers?.children?.length) {
     displayUsers.innerHTML = "";
   }
   fetch("/api/presentations").then(async (response) => {
     const data = await response.json();
-  
     const options = { year: "numeric", month: "long", day: "numeric" };
     data.forEach(unit => {
       const formatedDate = new Date(unit?.date).toLocaleDateString(undefined, options);
@@ -60,8 +69,26 @@ removeuserbtn.onclick = () => {
   createOrDeleteUser("/api/removeUser", "POST", "User doesn't exists", "User is Removed", removeUser);
 };
 
-//Util
 
+jokeForm.addEventListener('submit', e =>{
+  e.preventDefault()
+  const joke = e.target.joke?.value.trim()
+  const name = e.target.name.value || "anonymous"
+  if(!joke.length) return window.alert("EMPTY JOKES ARE NOT FUNNY!")
+  fetch("/api/createJoke",  {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ joke, name }),
+  }).then(_ => {
+    window.alert(`You made my backend laugh ${formatName(name)}!!`)
+    window.location.reload()
+  })
+
+})
+
+//Util
 const createUsersList = (name) => {
   const li = document.createElement("li");
   li.textContent = name;
@@ -96,34 +123,3 @@ const createOrDeleteUser = (path, method, errorMessage, successMessage, referenc
       console.log("Error", error);
     });
 };
-
-// const onDelayApiCalls = (options) => {
-//     const delay = (ms) => new Promise(resolve => setTimeout(resolve.bind(null), ms))
-//     let counter = 0
-//     const recursiveCalls = async () => {
-//         if(counter >= options.data) return options.onFinish()
-
-//         if(options.delay > 0) await delay(options.delay)
-//         const response = await fetchData(options.data[counter])
-//         options.onLoad(response)
-//         counter += 1
-//         recursiveCalls()
-//     }
-//     recursiveCalls()
-// }
-
-// const fetchData = (data) => new Promise(resolve => {
-//     setTimeout(() => {
-//         resolve(data + 100)
-//     },1000)
-// })
-
-// const onLoad = (response) => {
-//     console.log('this is the response', response)
-// }
-
-// const onFinish = () => {
-//     console.log('finished')
-// }
-// let options = {fetchData,  onLoad, onFinish, data: [1,2,3,4,5,6], delay: 300, retry}
-// onDelayApiCalls(options)

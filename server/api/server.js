@@ -2,9 +2,9 @@ const express = require("express");
 
 const cookieParser = require("cookie-parser");
 const { db } = require("../data/models");
-const authenticateToken = require("./auth");
+const authenticate = require("./auth");
 
-const { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser } = require("../controller/admin");
+const { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke } = require("../controller/admin");
 const { navigator, userList } = require("../controller/app");
 
 const path = require("path");
@@ -20,28 +20,33 @@ app.use(express.static(path.join(__dirname, "../../", "/public")));
 app.use(express.static(path.join(__dirname, "../", "/admin")));
 
 //CLIENT
-app.post("/api/navigator", authenticateToken, navigator);
+//           Path          Middleware   Controller
+app.post("/api/navigator", authenticate, navigator);
 
-app.get("/api/userList", authenticateToken, userList);
+app.get("/api/userList", authenticate, userList);
 
 //ADMIN
-app.get("/api/reload", authenticateToken, reloadState);
+app.get("/api/reload", authenticate, reloadState);
 
-app.get("/api/getLeftUser", authenticateToken, getLeftUsers);
+app.get("/api/getLeftUser", authenticate, getLeftUsers);
 
-app.get("/api/presentations", authenticateToken, presentations);
+app.get("/api/presentations", authenticate, presentations);
 
-app.post("/api/createUser", authenticateToken, createUser);
+app.post("/api/createUser", authenticate, createUser);
 
 app.post("/api/login", login);
 
-app.post("/api/removeUser", authenticateToken, removeUser);
+app.post("/api/removeUser", authenticate, removeUser);
 
-app.get("/admin", authenticateToken, admin);
+app.post("/api/createJoke", authenticate, createAJoke)
 
-app.get("/api/logout", authenticateToken, logout);
+app.get("/api/getRandomJoke", authenticate, getRandomJoke)
 
-app.get("/app", authenticateToken, (_, res) => {
+app.get("/api/logout", authenticate, logout);
+
+app.get("/admin", authenticate, admin);
+
+app.get("/app", authenticate, (_, res) => {
   res.sendFile(path.join(__dirname, "../../", "/public/index.html"));
 });
 

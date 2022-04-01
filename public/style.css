@@ -6,7 +6,6 @@ html {
 body {
   font-family: "Fjalla One", sans-serif;
   background: linear-gradient(to bottom, #405166 0%, #656f6f 100%);
-  
 }
 
 .container {
@@ -18,42 +17,48 @@ body {
   width: 100%;
 }
 
-
-
-div {
+.super-div {
   color: #fff;
   /* text-transform: uppercase; */
   font-size: 30px;
-  margin: 0;
+  margin: 0 auto;
   line-height: 100px;
   letter-spacing: 2px;
+  display: flex;
+  justify-content: center;
+  background-color: #263672;
+  align-items: center;
+  width: 40rem;
+  height: 20rem;
 }
 
 .title {
-  transform: translateX(-50%) rotate(-10deg);
-  display: block;
-  float: left;
-  left: 50%;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
 }
-.title span {
-  transform: skew(-10deg);
-  display: block;
-  float: left;
+span > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #e55643;
+  height: 5rem;
+  max-width: 100%;
+}
+
+span {
   text-shadow: #533d4a 1px 1px, #533d4a 2px 2px, #533d4a 3px 3px,
     #533d4a 4px 4px, #533d4a 5px 5px, #533d4a 6px 6px;
-  min-width: 10px;
-  min-height: 10px;
-  position: relative;
 }
 .btn {
   color: #f1c83c;
   cursor: pointer;
   text-shadow: #533d4a 1px 1px, #533d4a 2px 2px, #533d4a 3px 3px,
   #533d4a 4px 4px, #533d4a 5px 5px, #533d4a 6px 6px;
-  transform: translate(-50%, -50%);
+
   transition: all 0.5s;
-  
 }
 .btn:hover {
   text-shadow: #533d4a 4px 5px, #533d4a 7px 2px, #533d4a 3px 3px,

@@ -9,39 +9,46 @@ $(document).ready(function () {
     $(".title").lettering();
     $(".button").lettering();
   });
-  axios.get('/api/getLeftUser').then(response => {
-    names = response.data   
-    nameOfWeek = Math.floor(Math.random() * names.length)
 
-  const DATA = [
-    "Loading...",
-    "Saving the joke for PI day",
-    "And the lucky one is 🥁 🥁 🥁 🥁",
-    names[nameOfWeek],
-  ];
-  
-  let i = 0;
-  let span = document.querySelector(".title");
-  let styleString = "style=color:#f1c83c;font-size:150px;";
-  
-  
-  innerFunction = (timer) => {
-    const interval = setInterval(() => {
-      span.innerHTML = `<span ${i === DATA.length - 1 ? styleString : null}>${DATA[i]}</span>`;
-      i++;
-      animation();
-      if (i === DATA.length) {
-        clearInterval(interval);
-        document.querySelector('.wrapper').style.display = 'block'
-      }
-    }, timer);
+
+  const initializeNavigator = async () => {
+     let names = await axios('/api/getLeftUser')
+     let randomJoke = await axios('/api/getRandomJoke')
+     names = names.data
+     randomJoke = randomJoke.data
+     nameOfWeek = Math.floor(Math.random() * names.length)
+     const DATA = [
+      "Loading...",
+      ` <div>
+          <p>sha512-UxP+UhJaGRWuMG2YC6LPWYpFQnsSgnor0VUF3BHdD83PS/pOpN+FYbZmrYN+ISX8jnvgVUciqP/fILOXDjZSwg==</p>
+          <p>${randomJoke.name}</p>
+        </div>
+      `,
+      "And the lucky one is 🥁 🥁 🥁 🥁",
+      names[nameOfWeek],
+    ];
+    let i = 0;
+    let span = document.querySelector(".title");
+    let styleString = "style=color:#f1c83c;font-size:150px;";
+    innerFunction = (timer) => {
+      const interval = setInterval(() => {
+        span.innerHTML = `<span ${i === DATA.length - 1 ? styleString : null}>${DATA[i]}</span>`;
+        i++;
+        animation();
+        if (i === DATA.length) {
+          clearInterval(interval);
+          document.querySelector('.wrapper').style.display = 'block'
+        }
+      }, timer);
+    }
   }
-})
+
+  initializeNavigator()
 
 
 $('.btn').click(async function() {
     this.style.display = 'none'
-    innerFunction(1500)
+    innerFunction(3000)
      const winner = names[nameOfWeek]
      await axios.post('/api/navigator', {'userName': winner})
 })
@@ -56,5 +63,3 @@ $('.btn').click(async function() {
       0.05
     );
   }
-
-  

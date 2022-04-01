@@ -1,0 +1,1 @@
+In order to run the server localy you need to install postgreSQL and create a database with the name "postgres". The database should run on PORT 5432.

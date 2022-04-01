@@ -1,7 +1,8 @@
-const { Users, UsersLeft, Presentations } = require("../data/models");
+const { Users, UsersLeft, Presentations, Jokes } = require("../data/models");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+
 require('dotenv').config()
 
 const reloadState = async (_, res) => {
@@ -40,11 +41,11 @@ const createUser = async (req, res) => {
   if (user) return res.status(422).json("User Exists");
   await Users.create({ name: userName });
   await UsersLeft.create({ name: userName });
+  res.sendStatus(200)
 };
-console.log(process.env.ACCESS_TOKEN_SECRET, 'what is this')
 const login = async (req, res) => {
   const { username, password } = req.body;
-  if (username === "tali" && password === "123") {
+  if (username === process.env.USERNAME && password === process.env.PASSWORD) {
     const user = { name: username};
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
     res.json({ accessToken });
@@ -59,6 +60,23 @@ const logout = async (_, res) => {
 };
 
 
+const createAJoke = async (req, res) => {
+  const { name, joke } = req.body;
+  try {
+    console.log( name, joke, 'what is this')
+    await Jokes.create({ name, joke});
+    res.sendStatus(200)
+  } catch (error) {
+    res.sendStatus(500)
+  }
+}
+const getRandomJoke = async (req, res) => {
+  const jokesArray = await Jokes.findAll();
+  const randomJoke = jokesArray[Math.floor(Math.random() * jokesArray.length)]
+  if(!randomJoke) return res.json({})
+  const {name, joke} = randomJoke
+  res.json({name, joke})
+}
 
 const removeUser = async (req, res) => {
   const { userName } = req.body;
@@ -78,4 +96,4 @@ const admin = (_, res) => {
   res.sendFile(path.join(__dirname, "../", "/admin/index.html"));
 };
 
-module.exports = { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser };
+module.exports = { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke };
