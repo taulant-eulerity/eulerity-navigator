@@ -7,6 +7,10 @@ body {
   font-family: "Fjalla One", sans-serif;
   background: linear-gradient(to bottom, #405166 0%, #656f6f 100%);
 }
+a  {
+  text-decoration: none;
+  color: white;
+}
 
 .container {
   transform: translate(-50%, -50%);
@@ -47,6 +51,10 @@ span > div {
   height: 5rem;
   max-width: 40rem;
   line-height: 1.1;
+}
+
+span > div > span {
+  color: #f1c83c
 }
 
 span {

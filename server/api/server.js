@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const { db } = require("../data/models");
 const authenticate = require("./auth");
 
-const { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke } = require("../controller/admin");
+const { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke, getAllJokes } = require("../controller/admin");
 const { navigator, userList } = require("../controller/app");
 
 const path = require("path");
@@ -41,6 +41,8 @@ app.post("/api/removeUser", authenticate, removeUser);
 app.post("/api/createJoke", authenticate, createAJoke)
 
 app.get("/api/getRandomJoke", authenticate, getRandomJoke)
+
+app.get('/api/getAllJokes', authenticate, getAllJokes)
 
 app.get("/api/logout", authenticate, logout);
 

@@ -63,7 +63,6 @@ const logout = async (_, res) => {
 const createAJoke = async (req, res) => {
   const { name, joke } = req.body;
   try {
-    console.log( name, joke, 'what is this')
     await Jokes.create({ name, joke});
     res.sendStatus(200)
   } catch (error) {
@@ -77,7 +76,12 @@ const getRandomJoke = async (req, res) => {
   const {name, joke} = randomJoke
   res.json({name, joke})
 }
-
+const getAllJokes = async(_,res) => {
+  const jokesArray = await Jokes.findAll();
+  if(!jokesArray.length) return res.json([]);
+  const jokes = jokesArray.map(j => ({name: j.name, joke: j.joke, date: new Date(j.createdAt)}))
+  res.json(jokes)
+}
 const removeUser = async (req, res) => {
   const { userName } = req.body;
 
@@ -96,4 +100,4 @@ const admin = (_, res) => {
   res.sendFile(path.join(__dirname, "../", "/admin/index.html"));
 };
 
-module.exports = { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke };
+module.exports = { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke, getAllJokes };

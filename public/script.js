@@ -21,10 +21,9 @@ $(document).ready(function () {
       "Loading...",
       ` <div>
           <p>${randomJoke.joke}</p>
-          <p>${randomJoke.name}</p>
+          <span>${randomJoke.name}</span>
         </div>
       `,
-      "And the lucky one is 🥁 🥁 🥁 🥁",
       names[nameOfWeek],
     ];
     let i = 0;
@@ -48,9 +47,8 @@ $(document).ready(function () {
 
 $('.btn').click(async function() {
     this.style.display = 'none'
-    innerFunction(3000)
+    innerFunction(4000)
      const winner = names[nameOfWeek]
-     console.log(winner, 'this winner')
      await axios.post('/api/navigator', {'userName': winner})
 })
   function animation() {
