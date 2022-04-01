@@ -26,7 +26,6 @@ body {
   letter-spacing: 2px;
   display: flex;
   justify-content: center;
-  background-color: #263672;
   align-items: center;
   width: 40rem;
   height: 20rem;
@@ -36,16 +35,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  max-width: 100%;
 
 }
 span > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   color: #e55643;
   height: 5rem;
-  max-width: 100%;
+  max-width: 40rem;
+  line-height: 1.1;
 }
 
 span {

@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 
   const initializeNavigator = async () => {
-     let names = await axios('/api/getLeftUser')
+     names = await axios('/api/getLeftUser')
      let randomJoke = await axios('/api/getRandomJoke')
      names = names.data
      randomJoke = randomJoke.data
@@ -20,7 +20,7 @@ $(document).ready(function () {
      const DATA = [
       "Loading...",
       ` <div>
-          <p>sha512-UxP+UhJaGRWuMG2YC6LPWYpFQnsSgnor0VUF3BHdD83PS/pOpN+FYbZmrYN+ISX8jnvgVUciqP/fILOXDjZSwg==</p>
+          <p>${randomJoke.joke}</p>
           <p>${randomJoke.name}</p>
         </div>
       `,
@@ -50,6 +50,7 @@ $('.btn').click(async function() {
     this.style.display = 'none'
     innerFunction(3000)
      const winner = names[nameOfWeek]
+     console.log(winner, 'this winner')
      await axios.post('/api/navigator', {'userName': winner})
 })
   function animation() {

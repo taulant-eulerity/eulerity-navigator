@@ -10,7 +10,6 @@ const Presentations = db.define("presentations", {
   },
   name: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
   },
   date: {
