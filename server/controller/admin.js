@@ -2,6 +2,7 @@ const { Users, UsersLeft, Presentations } = require("../data/models");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const jwt = require("jsonwebtoken")
+require('dotenv').config()
 
 const reloadState = async (_, res) => {
   let users = await await Users.findAll();
@@ -40,7 +41,7 @@ const createUser = async (req, res) => {
   await Users.create({ name: userName });
   await UsersLeft.create({ name: userName });
 };
-
+console.log(process.env.ACCESS_TOKEN_SECRET, 'what is this')
 const login = async (req, res) => {
   const { username, password } = req.body;
   if (username === "tali" && password === "123") {
