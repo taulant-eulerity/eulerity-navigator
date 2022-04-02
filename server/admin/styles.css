@@ -27,6 +27,10 @@
 .read-jokes {
     margin-top: 2rem;
 }
+.joke-par-text {
+    white-space: pre-wrap;
+
+}
 .single-joke {
     margin-top: 0.5rem;
     padding: 0.1rem;

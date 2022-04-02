@@ -1,9 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+
+* {
+  margin: 0;
+}
 html {
   height: 100%;
-}
 
+}
 body {
+  padding: 1rem;
   font-family: "Fjalla One", sans-serif;
   background: linear-gradient(to bottom, #405166 0%, #656f6f 100%);
 }
@@ -11,7 +16,15 @@ a  {
   text-decoration: none;
   color: white;
 }
-
+.test-api {
+  margin-top: 1rem;
+  background-color: red;
+  width: max-content;
+  padding: 0.3rem;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .container {
   transform: translate(-50%, -50%);
   top: 50%;
@@ -54,7 +67,11 @@ span > div {
 }
 
 span > div > span {
-  color: #f1c83c
+  color: #f1c83c;
+  margin-top: 1rem;
+}
+span > div > p {
+  white-space: pre-wrap;
 }
 
 span {

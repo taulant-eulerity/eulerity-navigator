@@ -53,6 +53,7 @@ const createJokeDiv = (joke, name, date) => {
   const line = document.createElement("hr");
   div.classList.add("single-joke");
   innerDiv.classList.add("innerDiv-joke");
+  jokePar.classList.add('joke-par-text')
   jokePar.textContent = joke;
   namePar.textContent = name + " - ";
   datePar.textContent = " -- " + parseDate(date);

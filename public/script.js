@@ -1,10 +1,10 @@
 /* eslint-disable quotes */
 
 /* eslint-disable no-undef */
-
 let innerFunction;
 let nameOfWeek;
 let names;
+let isTest = false
 $(document).ready(function () {
     $(".title").lettering();
     $(".button").lettering();
@@ -44,12 +44,20 @@ $(document).ready(function () {
 
   initializeNavigator()
 
-
+$('.test-api').click((e) => {
+  e.stopPropagation()
+  isTest = !isTest
+  e.target.style.backgroundColor = isTest ? 'green' : "red"
+  e.target.textContent = isTest ? 'TEST ON' : "TEST OFF"
+  console.log(isTest)
+})
 $('.btn').click(async function() {
     this.style.display = 'none'
     innerFunction(4000)
      const winner = names[nameOfWeek]
-     await axios.post('/api/navigator', {'userName': winner})
+     if(!isTest) {
+      await axios.post('/api/navigator', {'userName': winner})
+     }
 })
   function animation() {
     var title1 = new TimelineMax();
