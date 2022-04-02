@@ -10,7 +10,6 @@ $(document).ready(function () {
     $(".button").lettering();
   });
 
-
   const initializeNavigator = async () => {
      names = await axios('/api/getLeftUser')
      let randomJoke = await axios('/api/getRandomJoke')
