@@ -1,1 +1,15 @@
-In order to run the server localy you need to install postgreSQL and create a database with the name "postgres". The database should run on PORT 5432.
+Hello there!! 
+
+Deployed version can be found here: https://eulerity-navigator.herokuapp.com/
+You need credentials to login!
+
+In order to run the server locally you need to install postgreSQL and create a database with the name "postgres". The database should run on PORT 5432.
+You need to have a .env file and create a JWT ACCESS_TOKEN_SECRET, USERNAME and PASSOWRD environment variables.
+
+To create JWT ACCESS_TOKEN_SECRET you can use node js, if you have it installed just run this command in terminal:
+run node than -> require("crypto").randomBytes(20).toString('hex')
+
+
+
+
+
