@@ -55,7 +55,7 @@ const createJokeDiv = (joke, name, date) => {
   innerDiv.classList.add("innerDiv-joke");
   jokePar.classList.add('joke-par-text')
   jokePar.textContent = joke;
-  namePar.textContent = name + " - ";
+  namePar.textContent = formatName(name) + " - ";
   datePar.textContent = " -- " + parseDate(date);
 
   div.appendChild(jokePar);
