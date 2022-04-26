@@ -7,7 +7,7 @@ const authenticate = require("./auth");
 const { reloadState, getLeftUsers,
    presentations, createUser, login, logout, admin,
    removeUser, createAJoke, getRandomJoke, getAllJokes,
-  createChoreUser, removeChoreUser, createChore, removeChore, choreUserList, choreList } = require("../controller/admin");
+  createChoreUser, removeChoreUser, createChore, removeChore, choreUserList, choreList, weeklyChores, displayWeeklyChores } = require("../controller/admin");
 const { navigator, userList } = require("../controller/app");
 
 const path = require("path");
@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/", (_, res) => res.redirect("/app"));
+app.get("/", (_, res) => res.redirect("/admin"));
 app.use(express.static(path.join(__dirname, "../../", "/public")));
 app.use(express.static(path.join(__dirname, "../", "/admin")));
 
@@ -34,11 +34,13 @@ app.post("/api/removeChoreUser", authenticate, removeChoreUser);
 
 app.post("/api/createChore", authenticate, createChore);
 app.post("/api/removeChore", authenticate, removeChore);
+app.post("/api/weeklyChores", authenticate, weeklyChores)
 
 app.get("/api/displayChoreUsers", authenticate, choreUserList);
 app.get("/api/displayChores", authenticate, choreList);
 
-
+app.get("/api/displayWeeklyChores", authenticate, displayWeeklyChores)
+ 
 //ADMIN
 app.get("/api/reload", authenticate, reloadState);
 

@@ -95,7 +95,7 @@ presentations.onclick = () => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     data.forEach((unit) => {
       const formatedDate = new Date(unit?.date).toLocaleDateString(undefined, options);
-      createUsersList(`${unit?.name} - ${formatedDate}`);
+      createUsersList(`${unit?.name} - ${formatedDate}`, displayUsers);
     });
   });
 };
@@ -176,7 +176,7 @@ const removeChore = document.querySelector('.remove-chore-input')
 const userChoreList = document.querySelector('.display-choreUsers-btn')
 const choreList = document.querySelector('.display-chore-btn')
 const choreAndUsers= document.querySelector('.display-chore-andUsers')
-
+const weeklyChoresBtn = document.querySelector('.display-weeklyChore-btn')
 
 
 userChoreList.onclick = function() {
@@ -188,7 +188,7 @@ choreList.onclick = function() {
 }
 
 
-
+ 
 addChoreUserBtn.onclick = () => {
   createOrDeleteUser("/api/createChoreUser", "POST", "User Exists", "User is Created", addChoreUser, "userName");
 };
@@ -205,3 +205,49 @@ addChoreBtn.onclick = () => {
 removeChoreBtn.onclick = () => {
   createOrDeleteUser("/api/removeChore", "POST", "Chore doesn't exists", "Chore is Removed", removeChore, "type");
 };
+
+weeklyChoresBtn.onclick = () => {
+    if (choreAndUsers?.children?.length) {
+    choreAndUsers.innerHTML = "";
+    return
+  }
+    fetch('api/displayWeeklyChores').then(response => {
+      response.json().then(res => {
+        res.sort(sortByDate)
+        res.forEach(it => {
+          const items = JSON.parse(it.list)
+          createWeeklyChores(it.date, items, choreAndUsers)
+        })
+      })
+    })
+}
+
+
+function createWeeklyChores (date, items, element)  {
+  const container = document.createElement('div')
+  const wrapper = document.createElement('div')
+  container.classList.add("weekly-chores-container")
+  const p =  document.createElement('p')
+  p.textContent = parseDate(date)
+  items && items.forEach(item => {
+    let choreText = `${item[0]} ---- ${item[1]}`
+    createUsersList(choreText, wrapper )
+  })
+  container.appendChild(p)
+  container.appendChild(wrapper)
+  element.appendChild(container)
+}
+
+const sortByDate = (a, b, mostRecent=true) => {
+  let dateA = new Date(a?.date).getTime();
+  let dateB = new Date(b?.date).getTime();
+
+  dateA = dateA ? dateA : mostRecent ? 0 : -1;
+  dateB = dateB ? dateB : mostRecent ? 0 : -1;
+
+  if (dateA > dateB)
+      return mostRecent ? -1 : 1
+  if (dateA < dateB)
+      return mostRecent ? 1 : -1
+  return 0
+}

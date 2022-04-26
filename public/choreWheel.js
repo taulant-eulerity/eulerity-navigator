@@ -1,4 +1,6 @@
 
+
+
 const para  = document.querySelector('.item');
 const btn  = document.querySelector('.btn');
 const namesWrapper = document.querySelector('.carousel-wrapper')
@@ -7,13 +9,32 @@ const carousel = document.querySelector('.carousel')
 const nextPair = document.querySelector('.next-pair')
 const picked = document.querySelector('.picked')
 const submit = document.querySelector('.submit')
-let names = ['Alex', 'Taulant']
-let chores = ['Clean Kitchen', 'Play with Danub']
+const image = document.querySelector('.image')
 
-
+//GLOBALS
+let names;
+let chores;
+let loading = true
 let callCounter = 0
 let firstCall = true
 let selected = {name: "", chore:""}
+let allSelected = []
+
+
+const fetchData = async () => {
+    let namesJson = await fetch("/api/displayChoreUsers")
+    names = await namesJson.json()
+    let  choresJson = await fetch("/api/displayChores")
+    chores = await choresJson.json()
+    loading = false
+
+    //Check this latter
+    if(!names.length || !chores.length)  nextPair.disabled = true
+}
+fetchData()
+
+
+
 const winner = "http://codeskulptor-demos.commondatastorage.googleapis.com/descent/gotitem.mp3"
 const clic = "http://codeskulptor-demos.commondatastorage.googleapis.com/descent/spring.mp3"
 const playSound = (url) => {
@@ -39,6 +60,7 @@ const startCarousel = (className, speed, items, wrapp, cb) => {
                 callCounter++
                 cb(slider.children[0].textContent)
                 if(callCounter === 2) {
+                    image.classList.remove('spin')
                     setTimeout(() => {
                         pickedPair(() => {
                             nextPair.disabled = false
@@ -61,14 +83,15 @@ const startCarousel = (className, speed, items, wrapp, cb) => {
 
 
 nextPair.onclick = function() {
-
+    image.classList.add('spin')
     startCarousel('carousel-slider', 44, shuffleArray(names), namesWrapper, getNames.bind(null, 'name'))
     startCarousel('carousel-slider2', 55, shuffleArray(chores), choreWrapper, getNames.bind(null, 'chore'))
 }
-submit.onclick = function() {
- console.log('All')
-}
 
+submit.onclick = async function() {
+    await axios.post("/api/weeklyChores", {weeklyChores: JSON.stringify(allSelected)})
+    allSelected = []
+}
 
 function getNames  (field, item) {
     selected[field] = item
@@ -76,6 +99,7 @@ function getNames  (field, item) {
 
 const pickedPair = (cb) => {
     createPair(selected.name, selected.chore)
+    allSelected.push([selected.name, selected.chore])
     names = names.filter(n => n !== selected.name)
     chores = chores.filter(n => n !== selected.chore)
     playSound(winner)
@@ -86,10 +110,6 @@ const pickedPair = (cb) => {
     }
     cb()
 }
-
-const onSubmit = () => {
-}
-
 
 
 const createDiv = (name, className, wrapp) => {

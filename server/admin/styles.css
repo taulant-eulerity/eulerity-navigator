@@ -5,6 +5,8 @@
 }
 .logout {
     margin-top: 2rem;
+    background-color: bisque;
+    font-weight: bold;
 }
 
 .joke-box {
@@ -60,4 +62,31 @@ textarea {
 }
 .chore-display-btn {
     margin-top: 0.5rem;
+}
+
+.display-weeklyChore-btn {
+    background-color: bisque;
+    font-weight: bold;
+}
+
+.weekly-chores-container {
+    border: 2px dotted black;
+    padding: 1rem;
+    margin-bottom: 1.4rem;
+}
+.weekly-chores-container {
+    opacity: 0.4;
+}
+.weekly-chores-container:first-child {
+   background-color: azure;
+   font-weight: bold;
+   opacity: 1;
+}
+.weekly-chores-container:hover {
+    opacity: 1;
+}
+
+.reload-btn {
+    background-color: orange;
+    font-weight: bold;
 }

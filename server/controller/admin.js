@@ -1,4 +1,4 @@
-const { Users, UsersLeft, Presentations, Jokes, ChoreUsers, Chores } = require("../data/models");
+const { Users, UsersLeft, Presentations, Jokes, ChoreUsers, Chores, WeeklyChores } = require("../data/models");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const jwt = require("jsonwebtoken");
@@ -157,8 +157,22 @@ const choreList = async (_,res) => {
   res.json(chores)
 }
 
+const weeklyChores = async (req,res) => {
+  const { weeklyChores } = req.body;
+  await WeeklyChores.create({data: weeklyChores, date: new Date()})
+  res.json()
+}
+
+const displayWeeklyChores = async (req,res) => {
+  let list = await WeeklyChores.findAll()
+  list = list.map(item => {
+    return {list: item.data, date: item.date}
+  })
+  res.json(list)
+}
+
 
 module.exports = { reloadState, getLeftUsers, presentations, createUser,
    login, logout, admin, removeUser, createAJoke, getRandomJoke, getAllJokes,
-   createChoreUser,removeChoreUser, createChore, removeChore, choreUserList, choreList
+   createChoreUser,removeChoreUser, createChore, removeChore, choreUserList, choreList, weeklyChores, displayWeeklyChores
   };
