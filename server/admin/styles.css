@@ -70,13 +70,12 @@ textarea {
 }
 
 .weekly-chores-container {
-    border: 2px dotted black;
+    border-bottom: 2px dotted black;
     padding: 1rem;
     margin-bottom: 1.4rem;
-}
-.weekly-chores-container {
     opacity: 0.4;
 }
+
 .weekly-chores-container:first-child {
    background-color: azure;
    font-weight: bold;

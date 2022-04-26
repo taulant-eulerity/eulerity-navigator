@@ -90,7 +90,9 @@ nextPair.onclick = function() {
 
 submit.onclick = async function() {
     await axios.post("/api/weeklyChores", {weeklyChores: JSON.stringify(allSelected)})
-    allSelected = []
+    setTimeout(() => {
+        window.location.reload()
+    },2000)
 }
 
 function getNames  (field, item) {
