@@ -36,7 +36,7 @@ const displayListOfItems = (element, path) => {
   fetch(path).then(async (response) => {
     let data = await response.json();
     data = data.sort();
-    data.forEach((name) => createUsersList(name));
+    data.forEach((name) => createUsersList(name, element));
   });
 
 }
@@ -101,11 +101,11 @@ presentations.onclick = () => {
 };
 
 adduserbtn.onclick = () => {
-  createOrDeleteUser("/api/createUser", "POST", "User Exists", "User is Created", addUser);
+  createOrDeleteUser("/api/createUser", "POST", "User Exists", "User is Created", addUser, "userName");
 };
 
 removeuserbtn.onclick = () => {
-  createOrDeleteUser("/api/removeUser", "POST", "User doesn't exists", "User is Removed", removeUser);
+  createOrDeleteUser("/api/removeUser", "POST", "User doesn't exists", "User is Removed", removeUser, 'userName');
 };
 
 jokeForm.addEventListener("submit", (e) => {
@@ -126,17 +126,17 @@ jokeForm.addEventListener("submit", (e) => {
 });
 
 //Util
-const createUsersList = (name) => {
+const createUsersList = (name, element) => {
   const li = document.createElement("li");
   li.textContent = name;
-  displayUsers.appendChild(li);
+  element.appendChild(li);
 };
 const formatName = (name) => {
   if (!name) return "";
   return name[0].toUpperCase() + name.slice(1).toLowerCase();
 };
 
-const createOrDeleteUser = (path, method, errorMessage, successMessage, reference) => {
+const createOrDeleteUser = (path, method, errorMessage, successMessage, reference, bodyName) => {
   const name = formatName(reference.value);
   if (!name.length) return;
   fetch(path, {
@@ -144,7 +144,7 @@ const createOrDeleteUser = (path, method, errorMessage, successMessage, referenc
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userName: name }),
+    body: JSON.stringify({ [bodyName]: name }),
   })
     .then(async (response) => {
       if (response.status === 422) {
@@ -190,19 +190,18 @@ choreList.onclick = function() {
 
 
 addChoreUserBtn.onclick = () => {
-  console.log("Ma")
-  createOrDeleteUser("/api/createChoreUser", "POST", "User Exists", "User is Created", addChoreUser);
+  createOrDeleteUser("/api/createChoreUser", "POST", "User Exists", "User is Created", addChoreUser, "userName");
 };
 
 removeChoreUserBtn.onclick = () => {
-  createOrDeleteUser("/api/removeChoreUser", "POST", "User doesn't exists", "User is Removed", removeChoreUser);
+  createOrDeleteUser("/api/removeChoreUser", "POST", "User doesn't exists", "User is Removed", removeChoreUser, "userName");
 };
 
 
 addChoreBtn.onclick = () => {
-  createOrDeleteUser("/api/createChore", "POST", "Chore Exists", "Chore is Created", addChore);
+  createOrDeleteUser("/api/createChore", "POST", "Chore Exists", "Chore is Created", addChore, "type");
 };
 
-removeChoreUserBtn.onclick = () => {
-  createOrDeleteUser("/api/removeChore", "POST", "Chore doesn't exists", "Chore is Removed", removeChore);
+removeChoreBtn.onclick = () => {
+  createOrDeleteUser("/api/removeChore", "POST", "Chore doesn't exists", "Chore is Removed", removeChore, "type");
 };

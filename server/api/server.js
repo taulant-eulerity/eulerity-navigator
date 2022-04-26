@@ -4,7 +4,10 @@ const cookieParser = require("cookie-parser");
 const { db } = require("../data/models");
 const authenticate = require("./auth");
 
-const { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke, getAllJokes } = require("../controller/admin");
+const { reloadState, getLeftUsers,
+   presentations, createUser, login, logout, admin,
+   removeUser, createAJoke, getRandomJoke, getAllJokes,
+  createChoreUser, removeChoreUser, createChore, removeChore, choreUserList, choreList } = require("../controller/admin");
 const { navigator, userList } = require("../controller/app");
 
 const path = require("path");
@@ -22,8 +25,19 @@ app.use(express.static(path.join(__dirname, "../", "/admin")));
 //CLIENT
 //           Path          Middleware   Controller
 app.post("/api/navigator", authenticate, navigator);
-
 app.get("/api/userList", authenticate, userList);
+
+//CHORES
+
+app.post("/api/createChoreUser", authenticate, createChoreUser);
+app.post("/api/removeChoreUser", authenticate, removeChoreUser);
+
+app.post("/api/createChore", authenticate, createChore);
+app.post("/api/removeChore", authenticate, removeChore);
+
+app.get("/api/displayChoreUsers", authenticate, choreUserList);
+app.get("/api/displayChores", authenticate, choreList);
+
 
 //ADMIN
 app.get("/api/reload", authenticate, reloadState);

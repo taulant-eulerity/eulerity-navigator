@@ -1,4 +1,4 @@
-const { Users, UsersLeft, Presentations, Jokes } = require("../data/models");
+const { Users, UsersLeft, Presentations, Jokes, ChoreUsers, Chores } = require("../data/models");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const jwt = require("jsonwebtoken");
@@ -100,4 +100,65 @@ const admin = (_, res) => {
   res.sendFile(path.join(__dirname, "../", "/admin/index.html"));
 };
 
-module.exports = { reloadState, getLeftUsers, presentations, createUser, login, logout, admin, removeUser, createAJoke, getRandomJoke, getAllJokes };
+
+//Chores
+const createChoreUser = async (req, res) => {
+  const { userName } = req.body;
+
+  const user = await ChoreUsers.findOne({ where: { name: userName } });
+  if (user) return res.status(422).json("User Exists");
+  await ChoreUsers.create({ name: userName });
+  res.sendStatus(200)
+};
+
+const removeChoreUser = async (req, res) => {
+  const { userName } = req.body;
+  const alluser = await ChoreUsers.findOne({ where: { name: userName } });
+
+  if (alluser) {
+    await alluser.destroy();
+    res.status(200).json("user has been removed");
+    return;
+  }
+  res.status(422).json("User doesn't exists");
+};
+
+
+const createChore = async (req, res) => {
+  const { type} = req.body;
+
+  const user = await Chores.findOne({ where: { type} });
+  if (user) return res.status(422).json("User Exists");
+  await Chores.create({ type});
+  res.sendStatus(200)
+};
+
+const removeChore = async (req, res) => {
+  const { type } = req.body;
+  const choreType = await Chores.findOne({ where: { type } });
+
+  if (choreType) {
+    await choreType.destroy();
+    res.status(200).json("chore has been removed");
+    return;
+  }
+  res.status(422).json("chore doesn't exists");
+};
+
+const choreUserList = async (_,res) => {
+  let users = await ChoreUsers.findAll({attributes: ['name']})
+  users = users.map(user => user.name)
+  res.json(users)
+}
+
+const choreList = async (_,res) => {
+  let chores = await Chores.findAll({attributes: ['type']})
+  chores = chores.map(user => user.type)
+  res.json(chores)
+}
+
+
+module.exports = { reloadState, getLeftUsers, presentations, createUser,
+   login, logout, admin, removeUser, createAJoke, getRandomJoke, getAllJokes,
+   createChoreUser,removeChoreUser, createChore, removeChore, choreUserList, choreList
+  };
