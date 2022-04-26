@@ -75,7 +75,7 @@ app.get("/choreWheel", authenticate, (_, res) => {
 app.get("*", (_, res) => res.redirect("/admin"));
 
 //SERVER
-db.sync().then((_) => {
+db.sync({force: true}).then((_) => {
   app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
   });
