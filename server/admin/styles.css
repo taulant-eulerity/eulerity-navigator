@@ -53,3 +53,11 @@ textarea {
     resize: none;
 }
 
+.choreWheel {
+    background-color: beige;
+    padding: 1rem;
+
+}
+.chore-display-btn {
+    margin-top: 0.5rem;
+}

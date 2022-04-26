@@ -26,17 +26,23 @@ logout.onclick = function () {
     .then((_) => window.location.reload())
     .catch((error) => console.log(error));
 };
-displayUsersbtn.onclick = () => {
-  if (displayUsers?.children?.length) {
-    displayUsers.innerHTML = "";
+
+const displayListOfItems = (element, path) => {
+  if (element?.children?.length) {
+    element.innerHTML = "";
     return;
   }
 
-  fetch("/api/userList").then(async (response) => {
+  fetch(path).then(async (response) => {
     let data = await response.json();
     data = data.sort();
     data.forEach((name) => createUsersList(name));
   });
+
+}
+
+displayUsersbtn.onclick = () => {
+  displayListOfItems(displayUsers, "/api/userList" )
 };
 
 const parseDate = (d) => {
@@ -153,4 +159,50 @@ const createOrDeleteUser = (path, method, errorMessage, successMessage, referenc
     .catch((error) => {
       console.log("Error", error);
     });
+};
+
+
+//CHORE-WHEEL
+
+const addChoreUserBtn = document.querySelector('.add-choreUser-btn')
+const removeChoreUserBtn = document.querySelector('.remove-choreUser-btn')
+const addChoreUser = document.querySelector('.add-user-input')
+const removeChoreUser = document.querySelector('.remove-user-input')
+const addChoreBtn = document.querySelector('.add-chore-btn')
+const removeChoreBtn = document.querySelector('.remove-chore-btn')
+const addChore= document.querySelector('.add-chore-input')
+const removeChore = document.querySelector('.remove-chore-input')
+
+const userChoreList = document.querySelector('.display-choreUsers-btn')
+const choreList = document.querySelector('.display-chore-btn')
+const choreAndUsers= document.querySelector('.display-chore-andUsers')
+
+
+
+userChoreList.onclick = function() {
+  displayListOfItems(choreAndUsers, '/api/displayChoreUsers')
+}
+
+choreList.onclick = function() {
+  displayListOfItems(choreAndUsers, '/api/displayChores')
+}
+
+
+
+addChoreUserBtn.onclick = () => {
+  console.log("Ma")
+  createOrDeleteUser("/api/createChoreUser", "POST", "User Exists", "User is Created", addChoreUser);
+};
+
+removeChoreUserBtn.onclick = () => {
+  createOrDeleteUser("/api/removeChoreUser", "POST", "User doesn't exists", "User is Removed", removeChoreUser);
+};
+
+
+addChoreBtn.onclick = () => {
+  createOrDeleteUser("/api/createChore", "POST", "Chore Exists", "Chore is Created", addChore);
+};
+
+removeChoreUserBtn.onclick = () => {
+  createOrDeleteUser("/api/removeChore", "POST", "Chore doesn't exists", "Chore is Removed", removeChore);
 };

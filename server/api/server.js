@@ -52,7 +52,11 @@ app.get("/app", authenticate, (_, res) => {
   res.sendFile(path.join(__dirname, "../../", "/public/index.html"));
 });
 
-app.get("*", (req, res) => res.redirect("/app"));
+app.get("/choreWheel", authenticate, (_, res) => {
+  res.sendFile(path.join(__dirname, "../../", "/public/choreWheel.html"));
+});
+
+app.get("*", (_, res) => res.redirect("/admin"));
 
 //SERVER
 db.sync().then((_) => {

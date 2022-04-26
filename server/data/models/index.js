@@ -2,6 +2,8 @@ const Users = require("./users");
 const Presentations = require("./presentations");
 const UsersLeft = require('./usersLeft')
 const Jokes = require("./jokes");
+const ChoreUsers = require('./choreUsers')
+const Chores = require('./chores')
 const db = require("../db");
 
 /**
@@ -22,5 +24,7 @@ module.exports = {
   Presentations,
   UsersLeft,
   Jokes,
+  ChoreUsers,
+  Chores,
   db
 };
