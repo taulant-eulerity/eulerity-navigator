@@ -27,7 +27,6 @@ const fetchData = async () => {
     let  choresJson = await fetch("/api/displayChores")
     chores = await choresJson.json()
     loading = false
-
     //Check this latter
     if(!names.length || !chores.length)  nextPair.disabled = true
 }
@@ -82,7 +81,9 @@ const startCarousel = (className, speed, items, wrapp, cb) => {
 }
 
 
+
 nextPair.onclick = function() {
+    //shuffleArray
     image.classList.add('spin')
     startCarousel('carousel-slider', 44, shuffleArray(names), namesWrapper, getNames.bind(null, 'name'))
     startCarousel('carousel-slider2', 55, shuffleArray(chores), choreWrapper, getNames.bind(null, 'chore'))
