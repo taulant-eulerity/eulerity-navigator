@@ -92,7 +92,7 @@ nextPair.onclick = function() {
 submit.onclick = async function() {
     await axios.post("/api/weeklyChores", {weeklyChores: JSON.stringify(allSelected)})
     setTimeout(() => {
-        window.location.reload()
+        window.location ='/admin'
     },2000)
 }
 
