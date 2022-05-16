@@ -10,7 +10,7 @@ const isProd =  process.env.PROD ? {
   }
 }:{}
 const db = new Sequelize(
-    process.env.DATABASE_URL || "postgres://localhost:5432/postgres",
+    process.env.DATABASE_URL || "postrgres",
     {
       ...isProd,
       logging: false // unless you like the logs
