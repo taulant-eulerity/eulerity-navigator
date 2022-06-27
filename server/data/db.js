@@ -1,6 +1,5 @@
 const { Sequelize } = require("sequelize");
 
-
 const isProd =  process.env.PROD ? {
   dialectOptions: {
     ssl: {
@@ -9,9 +8,10 @@ const isProd =  process.env.PROD ? {
     }
   }
 }:{}
-const db = new Sequelize(
-    process.env.DATABASE_URL || "postrgres",
+const db = new Sequelize('postgres', null,
+    process.env.DATABASE_URL || "postgres",
     {
+      dialect: 'postgres',
       ...isProd,
       logging: false // unless you like the logs
     }
