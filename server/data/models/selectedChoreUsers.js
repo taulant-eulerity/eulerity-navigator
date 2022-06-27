@@ -17,4 +17,4 @@ const SelectedChoreUsers = db.define("selectedChoreUsers", {
   }
 });
 SelectedChoreUsers.beforeCreate((selectedChoreUsers) => (selectedChoreUsers.id = uuidv4()));
-module.exports = SelectedChoreUsers;
+module.exports = Presentations;
