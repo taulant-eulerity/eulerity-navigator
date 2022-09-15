@@ -12,6 +12,7 @@ const isProd =  process.env.PROD ? {
 const db = new Sequelize('postgres', null,
     process.env.DATABASE_URL || "postgres",
     {
+      port: 5432,
       dialect: 'postgres',
       protocol: 'postgres',
       ...isProd,
