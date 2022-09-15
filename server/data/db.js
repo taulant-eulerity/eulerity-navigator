@@ -14,6 +14,8 @@ const db = new Sequelize('postgres', null,
     {
       dialect: 'postgres',
       protocol: 'postgres',
+      username: 'postgres',
+      host: 'ec2-54-157-79-121.compute-1.amazonaws.com',
       ...isProd,
       logging: false // unless you like the logs
     }
