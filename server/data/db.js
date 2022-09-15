@@ -8,11 +8,12 @@ const isProd =  process.env.PROD ? {
     }
   }
 }:{}
-console.log(process.env.DATABASE_URL,process.env.PROD, 'X0XPXPXPXPXW')
+console.log(process.env.DATABASE_URL,process.env.PROD, 'A')
 const db = new Sequelize('postgres', null,
     process.env.DATABASE_URL || "postgres",
     {
       dialect: 'postgres',
+      protocol: 'postgres',
       ...isProd,
       logging: false // unless you like the logs
     }
