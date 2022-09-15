@@ -65,7 +65,7 @@ app.get("/api/logout", authenticate, logout);
 app.get("/admin", authenticate, admin);
 
 app.get("/app", authenticate, (_, res) => {
-  res.sendFile(path.join(__dirname, "../../", "/public/newWinnerHtml.html"));
+  res.sendFile(path.join(__dirname, "../../", "/public/index.html"));
 });
 
 app.get("/choreWheel", authenticate, (_, res) => {
