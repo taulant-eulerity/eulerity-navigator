@@ -93,6 +93,9 @@ submit.onclick = async function() {
     //     window.location ='/admin'
     // },2000)
     await axios.post('/api/navigator', {'userName': selected.name})
+     setTimeout(() => {
+        window.location ='/admin'
+    },2000)
 }
 
 function getNames  (field, item) {
